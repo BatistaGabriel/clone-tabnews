@@ -11,5 +11,8 @@
   "type": "module",
   "engines": {
     "node": "v18.20.4"
+  },
+  "dependencies": {
+    "next": "^13.1.6"
   }
 }
