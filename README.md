@@ -6,7 +6,7 @@ Implementação do projeto do https://curso.dev
 
 ### Setting .nvmrc file content
 
-To follow some best practices on node projects, we will use [NVM](https://github.com/nvm-sh/nvm). One of the required things in the project is to have on the root of your project folder a file called `.nvmrc` which should contain the node version that better suits the project. 
+To follow some best practices on node projects, we will use [NVM](https://github.com/nvm-sh/nvm). One of the required things in the project is to have on the root of your project folder a file called `.nvmrc` which should contain the node version that better suits the project.
 This will allow other developers who use nvm to run your project in the correct version. We can set the content of this file by using the following command:
 
 ```bash
