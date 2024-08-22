@@ -21,3 +21,13 @@ We can set that information after the project creation by running the following 
 ```bash
 npm pkg set type=module engines.node=$(node -v)
 ```
+
+### Running the Container
+
+In order to work with the `PostgreSQL` database instance locally, we are utilizing containers. This requires you to have the `postgresql-client` installed on your machine so that you can connect to the database once the container is operational.
+
+To start the container, you can use the following command:
+
+```bash
+docker compose -f infra/compose.yaml
+```
