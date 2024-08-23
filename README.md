@@ -31,3 +31,19 @@ To start the container, you can use the following command:
 ```bash
 docker compose -f infra/compose.yaml
 ```
+
+### Environment Variables
+
+We use the environment variables approach to avoid hard-coded values for security reasons. The file containing these variables should NEVER be committed as part of the code base.
+
+You must create this file yourself. To do so, navigate to the root folder of the application. At the same level as the `.nvmrc` file, create a file named `.env`.
+
+Once you create the file, it should contain all the necessary environment variables, for example:
+
+```bash
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_DB=postgres
+POSTGRES_PASSWORD=mySuperUnhackablePassword
+```
