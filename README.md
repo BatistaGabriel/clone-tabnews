@@ -36,7 +36,7 @@ docker compose -f infra/compose.yaml
 
 We use the environment variables approach to avoid hard-coded values for security reasons. The file containing these variables should NEVER be committed as part of the code base.
 
-You must create this file yourself. To do so, navigate to the root folder of the application. At the same level as the `.nvmrc` file, create a file named `.env`.
+You must create this file yourself. To do so, navigate to the root folder of the application. At the same level as the `.nvmrc` file, create a file named `.env.development`.
 
 Once you create the file, it should contain all the necessary environment variables, for example:
 
