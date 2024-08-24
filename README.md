@@ -37,19 +37,9 @@ After installing those plugins, configure your editor by going to the `Settings`
 
 ### Environment variables
 
-We use the environment variables approach to avoid hard-coded values for security reasons. The file containing these variables should NEVER be committed as part of the code base.
+We use the environment variables approach to avoid hard-coded values for security reasons. The file containing variables for your `production environment` **should NEVER be committed** as part of the codebase.
 
-You must create this file yourself. To do so, navigate to the root folder of the application. At the same level as the `.nvmrc` file, create a file named `.env.development`.
-
-Once you create the file, it should contain all the necessary environment variables, for example:
-
-```bash
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_USER=postgres
-POSTGRES_DB=postgres
-POSTGRES_PASSWORD=mySuperUnhackablePassword
-```
+For `development`, we are using a file called `.env.development`, located at the same level as the `.nvmrc file`. There, you will find all the necessary environment variables for running the application locally.
 
 ## Working with NVM
 
