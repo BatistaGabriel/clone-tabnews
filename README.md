@@ -2,7 +2,56 @@
 
 Implementação do projeto do https://curso.dev
 
-# MISC
+## Start Here
+
+### Running the Project
+
+If this is your first time interacting with a `Node` project, there are a few things you need to do before getting the project up and running. First, install `node` and `nvm` -- both are important to have on your machine.
+
+Once you have installed node, we can move on to installing all the necessary dependencies for the project. You can do this by executing the following command:
+
+```bash
+npm install
+```
+
+After this command is executed and all the dependencies are installed, it is time to use the `dev` script to get the project up and running. To see what this script will do, go to `package.json` and look under the `scripts` section for the key `dev`.
+
+To run this script, use the following command:
+
+```bash
+npm run dev
+```
+
+### Adjusting Your Editor
+
+*All the configurations mentioned here were performed using `vscode` as the editor.*
+
+First of all, make sure to install editor plugins capable of interacting with the `.editorconfig` and `.prettierignore` files. If you are using `vscode`, you can search for `editorconfig` and `prettier`.
+
+After installing those plugins, configure your editor by going to the `Settings` page and following these steps:
+
+- Search for `formatter` and set the default formatter to `Prettier`.
+- Search for `format on save` and enable the option to format the file on save.
+- Search for `auto save` and turn this option `off`.
+
+
+### Environment variables
+
+We use the environment variables approach to avoid hard-coded values for security reasons. The file containing these variables should NEVER be committed as part of the code base.
+
+You must create this file yourself. To do so, navigate to the root folder of the application. At the same level as the `.nvmrc` file, create a file named `.env.development`.
+
+Once you create the file, it should contain all the necessary environment variables, for example:
+
+```bash
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_USER=postgres
+POSTGRES_DB=postgres
+POSTGRES_PASSWORD=mySuperUnhackablePassword
+```
+
+## Working with NVM
 
 ### Setting .nvmrc file content
 
@@ -22,28 +71,4 @@ We can set that information after the project creation by running the following 
 npm pkg set type=module engines.node=$(node -v)
 ```
 
-### Running the Container
 
-In order to work with the `PostgreSQL` database instance locally, we are utilizing containers. This requires you to have the `postgresql-client` installed on your machine so that you can connect to the database once the container is operational.
-
-To start the container, you can use the following command:
-
-```bash
-docker compose -f infra/compose.yaml
-```
-
-### Environment Variables
-
-We use the environment variables approach to avoid hard-coded values for security reasons. The file containing these variables should NEVER be committed as part of the code base.
-
-You must create this file yourself. To do so, navigate to the root folder of the application. At the same level as the `.nvmrc` file, create a file named `.env.development`.
-
-Once you create the file, it should contain all the necessary environment variables, for example:
-
-```bash
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_USER=postgres
-POSTGRES_DB=postgres
-POSTGRES_PASSWORD=mySuperUnhackablePassword
-```
