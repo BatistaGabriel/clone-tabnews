@@ -39,7 +39,7 @@ After installing those plugins, configure your editor by going to the `Settings`
 
 We use the environment variables approach to avoid hard-coded values for security reasons. The file containing variables for your `production environment` **should NEVER be committed** as part of the codebase.
 
-For `development`, we are using a file called `.env.development`, located at the same level as the `.nvmrc file`. There, you will find all the necessary environment variables for running the application locally.
+For `development`, we are using a file called `.env.development`, located at the same level as the `.nvmrc` file. There, you will find all the necessary environment variables for running the application locally.
 
 ## Working with NVM
 
