@@ -13,11 +13,10 @@
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
     "migration:create": "node-pg-migrate -m infra/migrations create",
-    "migration:up": "node-pg-migrate -m infra/migrations up"
+    "migration:up": "node-pg-migrate -m infra/migrations --envPath .env.development up"
   },
   "author": "Gabriel Batista",
   "license": "MIT",
-  "type": "module",
   "engines": {
     "node": "v18.20.4"
   },
