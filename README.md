@@ -58,7 +58,7 @@ Another best practice is to set the engines that your project requires, like the
 We can set that information after the project creation by running the following command:
 
 ```bash
-npm pkg set type=module engines.node=$(node -v)
+npm pkg set engines.node=$(node -v)
 ```
 
 
