@@ -44,7 +44,7 @@ For `development`, we are using a file called `.env.development`, located at the
 
 ### Fixing Local Linting Issues
 
-To fix linting issues before you commit code, you can create a `pre-commit hook`, which will help you avoid sending code to the codebase that might break your lint build. Since hooks _are not managed by Git_, you need to configure them on your machine.
+To fix linting issues before you commit code, you can create a `pre-commit hook`, which will help you avoid sending code to the codebase that might break your lint build. Since hooks **are not managed by Git**, you need to configure them on your machine.
 
 First, create the `pre-commit` file using the command:
 
