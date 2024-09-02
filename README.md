@@ -24,7 +24,7 @@ npm run dev
 
 ### Adjusting Your Editor
 
-*All the configurations mentioned here were performed using `vscode` as the editor.*
+_All the configurations mentioned here were performed using `vscode` as the editor._
 
 First of all, make sure to install editor plugins capable of interacting with the `.editorconfig` and `.prettierignore` files. If you are using `vscode`, you can search for `editorconfig` and `prettier`.
 
@@ -33,7 +33,6 @@ After installing those plugins, configure your editor by going to the `Settings`
 - Search for `formatter` and set the default formatter to `Prettier`.
 - Search for `format on save` and enable the option to format the file on save.
 - Search for `auto save` and turn this option `off`.
-
 
 ### Environment variables
 
@@ -60,5 +59,3 @@ We can set that information after the project creation by running the following 
 ```bash
 npm pkg set engines.node=$(node -v)
 ```
-
-
