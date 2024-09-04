@@ -4,6 +4,16 @@ Implementação do projeto do https://curso.dev
 
 ## Start Here
 
+### How to Commit
+
+In this repository, we use the `Conventional Commits` approach. To avoid any issues when committing code from your machine to this repository, it is highly recommended that you run the following command:
+
+```bash
+npm run commit
+```
+
+This will invoke the `cz` library, which will guide you through creating a commit that follows the `Conventional Commits` approach.
+
 ### Running the Project
 
 If this is your first time interacting with a `Node` project, there are a few things you need to do before getting the project up and running. First, install `node` and `nvm` -- both are important to have on your machine.
