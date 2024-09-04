@@ -40,31 +40,6 @@ We use the environment variables approach to avoid hard-coded values for securit
 
 For `development`, we are using a file called `.env.development`, located at the same level as the `.nvmrc` file. There, you will find all the necessary environment variables for running the application locally.
 
-## Linting
-
-### Fixing Local Linting Issues
-
-To fix linting issues before you commit code, you can create a `pre-commit hook`, which will help you avoid sending code to the codebase that might break your lint build. Since hooks **are not managed by Git**, you need to configure them on your machine.
-
-First, create the `pre-commit` file using the command:
-
-```bash
-touch .git/hooks/pre-commit
-```
-
-Then, edit this file to call the `lint:prettier:fix` script, which will be responsible for fixing linting issues. Your file should look like this:
-
-```bash
-#!/bin/sh
-npm run lint:prettier:fix
-```
-
-If you encounter permission issues, grant the following permission to the `pre-commit` file:
-
-```bash
-chmod +x .git/hooks/pre-commit
-```
-
 ## Working with NVM
 
 ### Setting .nvmrc file content
