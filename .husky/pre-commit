@@ -1,2 +1,3 @@
 #!/bin/sh
 npm run lint:prettier:fix
+npm run lint:secrets
