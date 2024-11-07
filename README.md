@@ -18,7 +18,23 @@ This will invoke the `cz` library, which will guide you through creating a commi
 
 If this is your first time interacting with a `Node` project, there are a few things you need to do before getting the project up and running. First, install `node` and `nvm` -- both are important to have on your machine.
 
-Once you have installed node, we can move on to installing all the necessary dependencies for the project. You can do this by executing the following command:
+Once you have installed both, it is time to tell Node to use the correct version to run this application. To do that, navigate to the same directory level where you created the `.nvmrc` file. Once you are in the correct location, run the following command:
+
+```bash
+nvm use
+```
+
+This will tell nvm to use the content of the `.nvmrc` file to download and set the Node version specified by the `.nvmrc` file.
+
+After that, you can run the following command:
+
+```bash
+nvm alias default $(cat .nvmrc)
+```
+
+This command instructs nvm to set the default version to the one defined in the `.nvmrc` file.
+
+We can move on to installing all the necessary dependencies for the project. You can do this by executing the following command:
 
 ```bash
 npm install
