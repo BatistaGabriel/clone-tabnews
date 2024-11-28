@@ -35,13 +35,14 @@ function DatabaseStatus() {
         </div>
       </>
     );
-    return (
-      <>
-        <h2>Database</h2>
-        <div>{databaseStatusInformation}</div>
-      </>
-    );
   }
+
+  return (
+    <>
+      <h2>Database</h2>
+      <div>{databaseStatusInformation}</div>
+    </>
+  );
 }
 
 function UpdatedAt() {
@@ -55,5 +56,5 @@ function UpdatedAt() {
     updatedAtText = new Date(data.updated_at).toLocaleString("pt-BR");
   }
 
-  return <div>última atualização: {updatedAtText}</div>;
+  return <div>Última atualização: {updatedAtText}</div>;
 }
