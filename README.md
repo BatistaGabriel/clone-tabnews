@@ -2,6 +2,10 @@
 
 Implementação do projeto do https://curso.dev
 
+## Status
+
+[![Automated Tests](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/tests.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/tests.yaml) [![Dependabot Updates](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/dependabot/dependabot-updates) [![Linting](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/linting.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/linting.yaml)
+
 ## Start Here
 
 ### How to Commit
