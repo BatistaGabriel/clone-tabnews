@@ -4,7 +4,13 @@ Implementação do projeto do https://curso.dev
 
 ## Status
 
+### Builds
+
 [![Automated Tests](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/tests.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/tests.yaml) [![Dependabot Updates](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/dependabot/dependabot-updates) [![Linting](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/linting.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/linting.yaml)
+
+### Deployments
+
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/clone-tabnews-ashen-two?name=env%3A+production) ![Vercel Deploy](https://deploy-badge.vercel.app/vercel/clone-tabnews-git-model-user-gabriel-batistas-projects-0753aa41?name=env%3A+staging)
 
 ## Start Here
 
