@@ -7,7 +7,7 @@ const defaultMigrationOptions = {
   dryRun: true,
   dir: resolve("infra", "migrations"),
   direction: "up",
-  verbose: true,
+  log: () => {},
   migrationsTable: "pgmigrations",
 };
 
@@ -23,11 +23,10 @@ async function listPendingMigrations() {
 
     return pendingMigrations;
   } catch (error) {
-    const serviceErrorObject = new ServiceError({
+    throw new ServiceError({
       message: "Erro ao executar a listagem de migrações pendentes",
       cause: error,
     });
-    throw serviceErrorObject;
   } finally {
     await dbClient?.end();
   }
@@ -46,11 +45,10 @@ async function runPendingMigrations() {
 
     return migratedMigrations;
   } catch (error) {
-    const serviceErrorObject = new ServiceError({
-      message: "Erro ao executar as migrações",
+    throw new ServiceError({
+      message: "Erro ao executar as migrações pendentes",
       cause: error,
     });
-    throw serviceErrorObject;
   } finally {
     await dbClient?.end();
   }

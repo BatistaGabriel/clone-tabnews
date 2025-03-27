@@ -8,11 +8,10 @@ async function query(queryObject) {
     const result = await client.query(queryObject);
     return result;
   } catch (error) {
-    const serviceErrorObject = new ServiceError({
+    throw new ServiceError({
       message: "Erro na conexão com o banco de dados ou na query",
       cause: error,
     });
-    throw serviceErrorObject;
   } finally {
     await client?.end();
   }
