@@ -1,0 +1,38 @@
+name: SAST - Semgrep
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  semgrep:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code ⬇
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 🐍
+        uses: actions/setup-python@v5
+
+      - name: Install Semgrep 🔄
+        run: pip install semgrep
+
+      - name: Run Semgrep SAST scan 🚀
+        run: |
+          semgrep --verbose --config "p/ci" --config "p/javascript" --config "p/nodejs" --config "p/security-audit"
+
+      - name: Fail if Semgrep finds issues 🚦
+        if: failure()
+        run: |
+          echo "🚨--------------------- WARNING ---------------------------🚨"
+          echo "🚨---------------------------------------------------------🚨"
+          echo "|     Semgrep found issues. Please fix them before merging. |"
+          echo "|     Please fix them before merging.                       |"
+          echo "🚨---------------------------------------------------------🚨"
+          exit 1
