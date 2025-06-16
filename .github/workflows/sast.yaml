@@ -1,9 +1,6 @@
 name: SAST - Semgrep
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -25,7 +22,13 @@ jobs:
 
       - name: Run Semgrep SAST scan 🚀
         run: |
-          semgrep --verbose --config "p/ci" --config "p/javascript" --config "p/nodejs" --config "p/security-audit"
+          semgrep --verbose \
+            --config "p/ci" \
+            --config "p/javascript" \
+            --config "p/nodejs" \
+            --config "p/security-audit" \
+            --config "p/owasp-top-ten" \
+            --config "p/cwe-top-25"
 
       - name: Fail if Semgrep finds issues 🚦
         if: failure()
