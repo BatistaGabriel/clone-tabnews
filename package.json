@@ -19,7 +19,11 @@
     "lint:eslint:check": "next lint --dir .",
     "lint:secrets": "secretlint \"**/*\"",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "security:check": "npm run lint:secrets && npm audit --audit-level=high",
+    "security:fix": "npm audit fix --force",
+    "security:report": "npm audit --json",
+    "security:full": "npm run security:check && npm run security:fix && npm run security:check"
   },
   "author": "Gabriel Batista",
   "license": "MIT",
