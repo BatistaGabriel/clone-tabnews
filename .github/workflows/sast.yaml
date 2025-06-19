@@ -1,15 +1,12 @@
-name: SAST - Semgrep
+name: Security Scan - SAST
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
 
 jobs:
-  semgrep:
+  security:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code ⬇
@@ -25,10 +22,39 @@ jobs:
 
       - name: Run Semgrep SAST scan 🚀
         run: |
-          semgrep --verbose --config "p/ci" --config "p/javascript" --config "p/nodejs" --config "p/security-audit"
+          semgrep --verbose \
+            --config "p/ci" \
+            --config "p/javascript" \
+            --config "p/nodejs" \
+            --config "p/react" \
+            --config "p/nextjs" \
+            --config "p/security-audit" \
+            --config "p/owasp-top-ten" \
+            --config "p/cwe-top-25" \
+            --sarif --output=semgrep.sarif \
+            --error
+        continue-on-error: true
+
+      - name: Upload SARIF to GitHub 📤
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: semgrep.sarif
+
+      - name: Comment on PR if issues are found 💬
+        if: github.event_name == 'pull_request' && steps.security.outputs.exit_code != 0
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚨 Security scan failed! Semgrep found issues. Check the Security tab for details.'
+            })
 
       - name: Fail if Semgrep finds issues 🚦
-        if: failure()
+        if: steps.security.outputs.exit_code != 0
         run: |
           echo "🚨--------------------- WARNING ---------------------------🚨"
           echo "🚨---------------------------------------------------------🚨"

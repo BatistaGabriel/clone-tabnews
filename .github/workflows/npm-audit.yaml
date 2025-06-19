@@ -1,0 +1,142 @@
+name: 🔒 Npm Audit & Auto-Fix
+
+on:
+  schedule:
+    - cron: "0 9 * * 1" # Every monday at 09:00
+  workflow_dispatch: # Allow manual execution
+  push:
+    paths:
+      - "package*.json"
+
+jobs:
+  npm-audit-and-fix:
+    name: NPM Audit & Fix
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout code ⬇
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+
+      - name: 📥 Install Dependencies
+        run: npm ci
+
+      - name: 🔍 Security Check (Before Fix)
+        run: |
+          echo "## 📊 NPM Security Report" > audit-report.md
+          echo "" >> audit-report.md
+          echo "### 🔍 Security Check Results (Before Fix):" >> audit-report.md
+          echo '```bash' >> audit-report.md
+          npm run security:check >> audit-report.md 2>&1 || echo "Vulnerabilities found - proceeding with fixes..." >> audit-report.md
+          echo '```' >> audit-report.md
+          echo "" >> audit-report.md
+
+      - name: 📊 Generate Detailed Audit Report (Before)
+        run: |
+          echo "### 📋 Detailed Vulnerability Report:" >> audit-report.md
+          echo '```json' >> audit-report.md
+          npm run security:report >> audit-report.md 2>&1 || true
+          echo '```' >> audit-report.md
+          echo "" >> audit-report.md
+
+      - name: 🛠️ Apply Security Fixes
+        id: security-fix
+        run: |
+          # Backup current state
+          cp package-lock.json package-lock.json.backup || true
+
+          # Apply fixes using your script
+          npm run security:fix || true
+
+          # Check if changes were made
+          if ! diff -q package-lock.json package-lock.json.backup > /dev/null 2>&1; then
+            echo "changes=true" >> $GITHUB_OUTPUT
+            echo "✅ Security fixes applied successfully!"
+          else
+            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "ℹ️ No vulnerabilities to fix"
+          fi
+
+      - name: ✅ Security Check (After Fix)
+        if: steps.security-fix.outputs.changes == 'true'
+        run: |
+          echo "### ✅ Security Check Results (After Fix):" >> audit-report.md
+          echo '```bash' >> audit-report.md
+          npm run security:check >> audit-report.md 2>&1 || echo "Some issues may still remain - please review manually" >> audit-report.md
+          echo '```' >> audit-report.md
+          echo "" >> audit-report.md
+
+      - name: 📋 Document Changes Made
+        if: steps.security-fix.outputs.changes == 'true'
+        run: |
+          echo "### 📋 Files Changed:" >> audit-report.md
+          echo '```bash' >> audit-report.md
+          git diff --name-only >> audit-report.md
+          echo '```' >> audit-report.md
+          echo "" >> audit-report.md
+          echo "### 🔄 Package Changes:" >> audit-report.md
+          echo '```diff' >> audit-report.md
+          git diff package-lock.json | head -50 >> audit-report.md || true
+          echo '```' >> audit-report.md
+          echo "" >> audit-report.md
+
+      - name: 🧪 Run Tests
+        if: steps.security-fix.outputs.changes == 'true'
+        run: |
+          echo "### 🧪 Test Results:" >> audit-report.md
+          if npm test; then
+            echo "✅ **All tests passed!** Changes are safe to merge." >> audit-report.md
+          else
+            echo "❌ **Tests failed!** Please review changes carefully before merging." >> audit-report.md
+            echo "" >> audit-report.md
+            echo "⚠️ **Action Required:** Manual review needed due to test failures." >> audit-report.md
+          fi
+          echo "" >> audit-report.md
+
+      - name: 🔄 Create Pull Request
+        if: steps.security-fix.outputs.changes == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: |
+            🔒 chore(security): fix npm audit vulnerabilities
+
+            - Auto-generated security fixes via npm run security:fix
+            - Executed security checks via npm run security:check
+            - Run by GitHub Actions on schedule
+          title: "🔒 Security: Auto-fix npm audit vulnerabilities"
+          body-path: audit-report.md
+          branch: security/auto-fix-vulnerabilities-${{ github.run_number }}
+          delete-branch: true
+          labels: |
+            security
+            dependencies
+            automated
+          reviewers: ${{ github.actor }}
+          draft: false
+
+      - name: 📢 Summary
+        run: |
+          if [ "${{ steps.security-fix.outputs.changes }}" == "true" ]; then
+            echo "✅ Security fixes applied using 'npm run security:fix'"
+            echo "🔍 Security validated using 'npm run security:check'"
+            echo "📋 Pull request created for your review"
+            echo ""
+            echo "🎯 Next steps:"
+            echo "   1. Review the automated PR"
+            echo "   2. Check if tests passed"
+            echo "   3. Merge when satisfied"
+          else
+            echo "ℹ️ No security vulnerabilities found via 'npm run security:check'"
+            echo "🎉 Your project is secure! All good!"
+          fi

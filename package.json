@@ -19,7 +19,11 @@
     "lint:eslint:check": "next lint --dir .",
     "lint:secrets": "secretlint \"**/*\"",
     "prepare": "husky",
-    "commit": "cz"
+    "commit": "cz",
+    "security:check": "npm run lint:secrets && npm audit --audit-level=high",
+    "security:fix": "npm audit fix --force",
+    "security:report": "npm audit --json",
+    "security:full": "npm run security:check && npm run security:fix && npm run security:check"
   },
   "author": "Gabriel Batista",
   "license": "MIT",
@@ -32,7 +36,7 @@
     "cookie": "1.0.2",
     "dotenv": "16.4.5",
     "dotenv-expand": "11.0.6",
-    "next": "14.2.8",
+    "next": "14.2.30",
     "next-connect": "1.0.0",
     "node-pg-migrate": "7.6.1",
     "pg": "8.12.0",
