@@ -10,7 +10,7 @@ Implementação do projeto do https://curso.dev
 
 ### Security Scans
 
-[![SAST - Scan](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/sast.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/sast.yaml) [![SCA - Scan](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/sca.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/sca.yaml) [![DAST - Scan](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/dast.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/dast.yaml)
+[![SAST - Scan](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/sast.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/sast.yaml)
 
 ### Deployments
 
