@@ -103,17 +103,27 @@ jobs:
           fi
           echo "" >> audit-report.md
 
+      - name: 🧹 Cleanup temp files
+        if: steps.security-fix.outputs.changes == 'true'
+        run: rm -f package-lock.json.backup
+
       - name: 🔄 Create Pull Request
         if: steps.security-fix.outputs.changes == 'true'
         uses: peter-evans/create-pull-request@v5
+        env:
+          HUSKY: 0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: |
             chore(security): fix npm audit vulnerabilities
-
             - Auto-generated security fixes via npm run security:fix
             - Executed security checks via npm run security:check
             - Run by GitHub Actions on schedule
+          commit-options: --no-verify
+          add-paths: |
+            package.json
+            package-lock.json
+            audit-report.md
           title: "🔒 Security: Auto-fix npm audit vulnerabilities"
           body-path: audit-report.md
           branch: security/auto-fix-vulnerabilities-${{ github.run_number }}
