@@ -1,4 +1,4 @@
-name: 🔒 Npm Audit & Auto-Fix
+name: Npm Audit & Auto-Fix
 
 on:
   schedule:
@@ -109,7 +109,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: |
-            🔒 chore(security): fix npm audit vulnerabilities
+            chore(security): fix npm audit vulnerabilities
 
             - Auto-generated security fixes via npm run security:fix
             - Executed security checks via npm run security:check
