@@ -2,6 +2,7 @@ import email from "infra/email.js";
 import database from "infra/database.js";
 import webserver from "infra/webserver.js";
 import { NotFoundError } from "infra/errors.js";
+import user from "models/user.js";
 
 const EXPIRATION_IN_MILISECONDS = 60 * 15 * 1000; // 15 minutes
 
@@ -59,12 +60,41 @@ async function create(userId) {
   }
 }
 
+async function markTokenAsUsed(activationTokenId) {
+  const usedActivationToken = await runUpdateQuery(activationTokenId);
+  return usedActivationToken;
+
+  async function runUpdateQuery(activationTokenId) {
+    const results = await database.query({
+      text: `
+        UPDATE
+          user_activation_tokens
+        SET
+          used_at = timezone('utc', now()),
+          updated_at = timezone('utc', now())
+        WHERE
+          id = $1
+        RETURNING
+          *
+        ;`,
+      values: [activationTokenId],
+    });
+
+    return results.rows[0];
+  }
+}
+
+async function activateUserByUserId(userId) {
+  const activatedUser = await user.setFeatures(userId, ["create:session"]);
+  return activatedUser;
+}
+
 async function sendEmailToUser(user, activationToken) {
   await email.send({
     from: "CloneTabNews <contact@domain.com>",
     to: user.email,
     subject: "Activate your account",
-    text: `Hello ${user.username}, please activate your account by clicking the link down bellow: \n\n${webserver.origin}/account/activate/${activationToken.id}\n\n\nThank you!\n\n- The CloneTabNews Team`,
+    text: `Hello ${user.username}, please activate your account by clicking the link down bellow: \n\n${webserver.origin}/register/activate/${activationToken.id}\n\n\nThank you!\n\n- The CloneTabNews Team`,
   });
 }
 
@@ -72,6 +102,8 @@ const activation = {
   create,
   sendEmailToUser,
   findOneValidById,
+  markTokenAsUsed,
+  activateUserByUserId,
 };
 
 export default activation;
