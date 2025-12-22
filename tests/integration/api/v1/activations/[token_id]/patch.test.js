@@ -1,7 +1,7 @@
 import { version as uuidVersion } from "uuid";
-import activation from "models/activation.js";
-import user from "models/user.js";
 import orchestrator from "tests/orchestrator.js";
+import user from "models/user.js";
+import activation from "models/activation.js";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -107,8 +107,8 @@ describe("PATCH /api/v1/activations/[token_id]", () => {
         id: activationToken.id,
         used_at: responseBody.used_at,
         user_id: activationToken.user_id,
-        expires_at: activationToken.expires_at,
-        created_at: activationToken.created_at,
+        expires_at: responseBody.expires_at,
+        created_at: responseBody.created_at,
         updated_at: responseBody.updated_at,
       });
 
@@ -157,8 +157,9 @@ describe("PATCH /api/v1/activations/[token_id]", () => {
       const responseBody = await response.json();
       expect(responseBody).toEqual({
         name: "ForbiddenError",
-        message: "O Usuário não pode mais utilizar tokens de ativação.",
-        action: "Entre em contato com o suporte.",
+        message: "Você não tem permissão para realizar esta ação.",
+        action:
+          "Verifique se sua conta possui os privilégios [read:activation_token].",
         status_code: 403,
       });
     });
@@ -188,7 +189,7 @@ describe("PATCH /api/v1/activations/[token_id]", () => {
       const responseBody = await response.json();
       expect(responseBody).toEqual({
         name: "ForbiddenError",
-        message: "O Usuário não pode mais utilizar tokens de ativação.",
+        message: "Você não tem permissão para realizar esta ação.",
         action:
           "Verifique se sua conta possui os privilégios [read:activation_token].",
         status_code: 403,
