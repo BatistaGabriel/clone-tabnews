@@ -2,19 +2,7 @@
 
 Implementação do projeto do https://curso.dev
 
-## Status
-
-### Builds
-
-[![Automated Tests](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/tests.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/tests.yaml) [![Dependabot Updates](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/dependabot/dependabot-updates) [![Linting](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/linting.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/linting.yaml)
-
-### Security Scans
-
-[![SAST - Scan](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/sast.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/sast.yaml) [![Npm Audit & Auto-Fix](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/npm-audit.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/npm-audit.yaml)
-
-### Deployments
-
-![Vercel Deploy](https://deploy-badge.vercel.app/vercel/clone-tabnews-ashen-two?name=env%3A+production) ![Vercel Deploy](https://deploy-badge.vercel.app/vercel/clone-tabnews-git-model-user-gabriel-batistas-projects-0753aa41?name=env%3A+staging)
+[![Automated Tests](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/tests.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/tests.yaml) [![Linting](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/linting.yaml/badge.svg)](https://github.com/BatistaGabriel/clone-tabnews/actions/workflows/linting.yaml) ![Vercel Deploy](https://deploy-badge.vercel.app/vercel/clone-tabnews-ashen-two?name=deploy+status%3A)
 
 ## Start Here
 
