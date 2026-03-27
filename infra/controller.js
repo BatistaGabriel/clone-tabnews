@@ -1,11 +1,14 @@
 import * as cookie from "cookie";
 import session from "models/session.js";
+import user from "models/user.js";
+import authorization from "models/authorization.js";
 import {
   InternalServerError,
   MethodNotAllowedError,
   ValidationError,
   NotFoundError,
   UnauthorizedError,
+  ForbiddenError,
 } from "infra/errors.js";
 
 function onNoMatchHandler(request, response) {
@@ -14,7 +17,11 @@ function onNoMatchHandler(request, response) {
 }
 
 function onErrorHandler(error, request, response) {
-  if (error instanceof ValidationError || error instanceof NotFoundError) {
+  if (
+    error instanceof ValidationError ||
+    error instanceof NotFoundError ||
+    error instanceof ForbiddenError
+  ) {
     return response.status(error.statusCode).json(error);
   }
 
@@ -54,6 +61,52 @@ async function clearSessionCookie(response) {
   response.setHeader("Set-Cookie", setCookie);
 }
 
+async function injectAnnonymousOrUser(request, response, next) {
+  if (request.cookies?.session_id) {
+    await injectAuthenticatedUser(request);
+    return next();
+  }
+
+  injectAnnonymousUser(request);
+  return next();
+}
+
+async function injectAuthenticatedUser(request) {
+  const sessionToken = request.cookies.session_id;
+  const sessionObject = await session.findOneValidByToken(sessionToken);
+  const userObject = await user.findOneById(sessionObject.user_id);
+
+  request.context = {
+    ...request.context,
+    user: userObject,
+  };
+}
+
+function injectAnnonymousUser(request) {
+  const annonymousUserObject = {
+    features: ["read:activation_token", "create:session", "create:user"],
+  };
+
+  request.context = {
+    ...request.context,
+    user: annonymousUserObject,
+  };
+}
+
+function canRequest(feature) {
+  return function canRequestMiddleware(request, response, next) {
+    const userTryingToRequest = request.context.user;
+    if (authorization.can(userTryingToRequest, feature)) {
+      return next();
+    }
+
+    throw new ForbiddenError({
+      message: "Você não tem permissão para realizar esta ação.",
+      action: `Verifique se sua conta possui os privilégios [${feature}].`,
+    });
+  };
+}
+
 const controller = {
   errorHandlers: {
     onNoMatch: onNoMatchHandler,
@@ -61,6 +114,8 @@ const controller = {
   },
   setSessionCookie,
   clearSessionCookie,
+  injectAnnonymousOrUser,
+  canRequest,
 };
 
 export default controller;

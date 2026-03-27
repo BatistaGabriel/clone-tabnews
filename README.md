@@ -18,16 +18,6 @@ Implementação do projeto do https://curso.dev
 
 ## Start Here
 
-### How to Commit
-
-In this repository, we use the `Conventional Commits` approach. To avoid any issues when committing code from your machine to this repository, it is highly recommended that you run the following command:
-
-```bash
-npm run commit
-```
-
-This will invoke the `cz` library, which will guide you through creating a commit that follows the `Conventional Commits` approach.
-
 ### Running the Project
 
 If this is your first time interacting with a `Node` project, there are a few things you need to do before getting the project up and running. First, install `node` and `nvm` -- both are important to have on your machine.
@@ -35,7 +25,7 @@ If this is your first time interacting with a `Node` project, there are a few th
 Once you have installed both, it is time to tell Node to use the correct version to run this application. To do that, navigate to the same directory level where you created the `.nvmrc` file. Once you are in the correct location, run the following command:
 
 ```bash
-nvm use
+nvm install && nvm use
 ```
 
 This will tell nvm to use the content of the `.nvmrc` file to download and set the Node version specified by the `.nvmrc` file.
@@ -79,6 +69,16 @@ After installing those plugins, configure your editor by going to the `Settings`
 We use the environment variables approach to avoid hard-coded values for security reasons. The file containing variables for your `production environment` **should NEVER be committed** as part of the codebase.
 
 For `development`, we are using a file called `.env.development`, located at the same level as the `.nvmrc` file. There, you will find all the necessary environment variables for running the application locally.
+
+### How to Commit
+
+In this repository, we use the `Conventional Commits` approach. To avoid any issues when committing code from your machine to this repository, it is highly recommended that you run the following command:
+
+```bash
+npm run commit
+```
+
+This will invoke the `cz` library, which will guide you through creating a commit that follows the `Conventional Commits` approach.
 
 ## Working with NVM
 
