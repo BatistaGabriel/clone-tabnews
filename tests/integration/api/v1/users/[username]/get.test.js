@@ -9,7 +9,7 @@ beforeAll(async () => {
 
 describe("GET /api/v1/users/[username]", () => {
   describe("Anonymous user", () => {
-    test("With exact case match", async () => {
+    test("With exact `case match`", async () => {
       await orchestrator.createUser({
         username: "MesmoCase",
         email: "mesmo.case@domain.com",
@@ -36,7 +36,7 @@ describe("GET /api/v1/users/[username]", () => {
       expect(Date.parse(responseBody.created_at)).not.toBeNaN();
       expect(Date.parse(responseBody.updated_at)).not.toBeNaN();
     });
-    test("With case mismatch", async () => {
+    test("With `case mismatch`", async () => {
       await orchestrator.createUser({
         username: "CaseDiferente",
         email: "case.diferente@domain.com",
@@ -63,7 +63,7 @@ describe("GET /api/v1/users/[username]", () => {
       expect(Date.parse(responseBody.created_at)).not.toBeNaN();
       expect(Date.parse(responseBody.updated_at)).not.toBeNaN();
     });
-    test("With noneexistent username", async () => {
+    test("With noneexistent `username`", async () => {
       const response = await fetch(
         "http://localhost:3000/api/v1/users/UsuarionInexistente",
       );

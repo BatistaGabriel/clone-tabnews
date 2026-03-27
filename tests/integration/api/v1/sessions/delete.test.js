@@ -11,7 +11,7 @@ beforeAll(async () => {
 
 describe("DELETE /api/v1/sessions", () => {
   describe("Default user", () => {
-    test("With nonexistent session", async () => {
+    test("With nonexistent `session`", async () => {
       const nonExistentToken =
         "42bc6acd5d3edb81642a498485f91c35ddd33d43738bed040f50150928e8c9676d27144370daddfe5598ef5f115fcf79";
 
@@ -32,7 +32,7 @@ describe("DELETE /api/v1/sessions", () => {
         status_code: 401,
       });
     });
-    test("With expired session", async () => {
+    test("With expired `session`", async () => {
       jest.useFakeTimers({
         now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS),
       });
@@ -62,7 +62,7 @@ describe("DELETE /api/v1/sessions", () => {
         status_code: 401,
       });
     });
-    test("With valid session", async () => {
+    test("With valid `session`", async () => {
       const createdUser = await orchestrator.createUser({
         username: "UserWithValidSession",
       });

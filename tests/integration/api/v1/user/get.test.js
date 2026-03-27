@@ -11,7 +11,7 @@ beforeAll(async () => {
 
 describe("GET /api/v1/user", () => {
   describe("Anonymous user", () => {
-    test("Retrieving the endpoint", async () => {
+    test("Retrieving the `endpoint`", async () => {
       const response = await fetch("http://localhost:3000/api/v1/user");
 
       expect(response.status).toBe(403);
@@ -27,7 +27,7 @@ describe("GET /api/v1/user", () => {
   });
 
   describe("Default user", () => {
-    test("With valid session", async () => {
+    test("With valid `session`", async () => {
       const createdUser = await orchestrator.createUser({
         username: "UserWithValidSession",
       });
@@ -86,7 +86,7 @@ describe("GET /api/v1/user", () => {
         httpOnly: true,
       });
     });
-    test("With nonexistent session", async () => {
+    test("With nonexistent `session`", async () => {
       const nonExistentToken =
         "42bc6acd5d3edb81642a498485f91c35ddd33d43738bed040f50150928e8c9676d27144370daddfe5598ef5f115fcf79";
 
@@ -119,7 +119,7 @@ describe("GET /api/v1/user", () => {
         httpOnly: true,
       });
     });
-    test("With expired session", async () => {
+    test("With expired `session`", async () => {
       jest.useFakeTimers({
         now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS),
       });
@@ -161,7 +161,7 @@ describe("GET /api/v1/user", () => {
         httpOnly: true,
       });
     });
-    test("With a session closer to expiration", async () => {
+    test("With a `session` closer to expiration", async () => {
       jest.useFakeTimers({
         now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS - 1000),
         // Simulate a session close to expiration

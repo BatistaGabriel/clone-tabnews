@@ -7,8 +7,8 @@ beforeAll(async () => {
 
 describe("PUT /api/v1/migrations", () => {
   describe("Anonymous user", () => {
-    describe("Running pending migrations", () => {
-      test("With incorrect HTTP method", async () => {
+    describe("Running pending `migrations`", () => {
+      test("With incorrect `HTTP method`", async () => {
         const response = await fetch(
           "http://localhost:3000/api/v1/migrations",
           {
