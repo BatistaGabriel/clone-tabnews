@@ -1,6 +1,6 @@
 import { resolve } from "node:path";
 import { ServiceError } from "infra/errors.js";
-import migrationRunner from "node-pg-migrate";
+import { runner as migrationRunner } from "node-pg-migrate";
 import database from "infra/database.js";
 
 const defaultMigrationOptions = {
