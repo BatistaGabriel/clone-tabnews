@@ -85,6 +85,7 @@ describe("GET /api/v1/user", () => {
         maxAge: session.EXPIRATION_IN_MILISECONDS / 1000,
         path: "/",
         httpOnly: true,
+        sameSite: "Lax",
       });
     });
     test("With nonexistent `session`", async () => {
@@ -164,7 +165,7 @@ describe("GET /api/v1/user", () => {
     });
     test("With a `session` closer to expiration", async () => {
       jest.useFakeTimers({
-        now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS - 1000),
+        now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS / 2),
         // Simulate a session close to expiration
       });
 
@@ -172,10 +173,10 @@ describe("GET /api/v1/user", () => {
         username: "UserWithCloserToExpireSession",
       });
 
-      jest.useRealTimers();
-
       const activatedUser = await orchestrator.activateUser(createdUser);
       const sessionObject = await orchestrator.createSession(createdUser);
+
+      jest.useRealTimers();
 
       const response = await fetch(`${webserver.origin}/api/v1/user`, {
         headers: {
@@ -221,6 +222,7 @@ describe("GET /api/v1/user", () => {
         maxAge: session.EXPIRATION_IN_MILISECONDS / 1000,
         path: "/",
         httpOnly: true,
+        sameSite: "Lax",
       });
     });
   });
