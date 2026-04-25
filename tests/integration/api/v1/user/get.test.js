@@ -2,6 +2,7 @@ import orchestrator from "tests/orchestrator.js";
 import { version as uuidVersion } from "uuid";
 import setCookieParser from "set-cookie-parser";
 import session from "models/session.js";
+import webserver from "infra/webserver.js";
 
 beforeAll(async () => {
   await orchestrator.waitForAllServices();
@@ -11,8 +12,8 @@ beforeAll(async () => {
 
 describe("GET /api/v1/user", () => {
   describe("Anonymous user", () => {
-    test("Retrieving the endpoint", async () => {
-      const response = await fetch("http://localhost:3000/api/v1/user");
+    test("Retrieving the `endpoint`", async () => {
+      const response = await fetch(`${webserver.origin}/api/v1/user`);
 
       expect(response.status).toBe(403);
 
@@ -27,7 +28,7 @@ describe("GET /api/v1/user", () => {
   });
 
   describe("Default user", () => {
-    test("With valid session", async () => {
+    test("With valid `session`", async () => {
       const createdUser = await orchestrator.createUser({
         username: "UserWithValidSession",
       });
@@ -35,7 +36,7 @@ describe("GET /api/v1/user", () => {
       const activatedUser = await orchestrator.activateUser(createdUser);
       const sessionObject = await orchestrator.createSession(createdUser);
 
-      const response = await fetch("http://localhost:3000/api/v1/user", {
+      const response = await fetch(`${webserver.origin}/api/v1/user`, {
         headers: {
           Cookie: `session_id=${sessionObject.token}`,
         },
@@ -84,13 +85,14 @@ describe("GET /api/v1/user", () => {
         maxAge: session.EXPIRATION_IN_MILISECONDS / 1000,
         path: "/",
         httpOnly: true,
+        sameSite: "Lax",
       });
     });
-    test("With nonexistent session", async () => {
+    test("With nonexistent `session`", async () => {
       const nonExistentToken =
         "42bc6acd5d3edb81642a498485f91c35ddd33d43738bed040f50150928e8c9676d27144370daddfe5598ef5f115fcf79";
 
-      const response = await fetch("http://localhost:3000/api/v1/user", {
+      const response = await fetch(`${webserver.origin}/api/v1/user`, {
         headers: {
           Cookie: `session_id=${nonExistentToken}`,
         },
@@ -119,7 +121,7 @@ describe("GET /api/v1/user", () => {
         httpOnly: true,
       });
     });
-    test("With expired session", async () => {
+    test("With expired `session`", async () => {
       jest.useFakeTimers({
         now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS),
       });
@@ -132,7 +134,7 @@ describe("GET /api/v1/user", () => {
 
       jest.useRealTimers();
 
-      const response = await fetch("http://localhost:3000/api/v1/user", {
+      const response = await fetch(`${webserver.origin}/api/v1/user`, {
         headers: {
           Cookie: `session_id=${sessionObject.token}`,
         },
@@ -161,9 +163,9 @@ describe("GET /api/v1/user", () => {
         httpOnly: true,
       });
     });
-    test("With a session closer to expiration", async () => {
+    test("With a `session` closer to expiration", async () => {
       jest.useFakeTimers({
-        now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS - 1000),
+        now: new Date(Date.now() - session.EXPIRATION_IN_MILISECONDS / 2),
         // Simulate a session close to expiration
       });
 
@@ -171,12 +173,12 @@ describe("GET /api/v1/user", () => {
         username: "UserWithCloserToExpireSession",
       });
 
-      jest.useRealTimers();
-
       const activatedUser = await orchestrator.activateUser(createdUser);
       const sessionObject = await orchestrator.createSession(createdUser);
 
-      const response = await fetch("http://localhost:3000/api/v1/user", {
+      jest.useRealTimers();
+
+      const response = await fetch(`${webserver.origin}/api/v1/user`, {
         headers: {
           Cookie: `session_id=${sessionObject.token}`,
         },
@@ -220,6 +222,7 @@ describe("GET /api/v1/user", () => {
         maxAge: session.EXPIRATION_IN_MILISECONDS / 1000,
         path: "/",
         httpOnly: true,
+        sameSite: "Lax",
       });
     });
   });

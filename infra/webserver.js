@@ -7,7 +7,7 @@ function getOrigin() {
     return `https://${process.env.VERCEL_URL}`;
   }
 
-  return "https://clone-tabnews-ashen-two.vercel.app";
+  return "https://www.batistalabs.com/";
 }
 
 const webserver = {

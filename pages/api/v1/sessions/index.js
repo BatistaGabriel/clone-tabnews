@@ -6,18 +6,16 @@ import session from "models/session.js";
 
 import { ForbiddenError } from "infra/errors.js";
 
-const router = createRouter();
-
-router.use(controller.injectAnnonymousOrUser);
-router.post(controller.canRequest("create:session"), postHandler);
-router.delete(deleteHandler);
-
-export default router.handler(controller.errorHandlers);
+export default createRouter()
+  .use(controller.injectAnnonymousOrUser)
+  .post(controller.canRequest("create:session"), postHandler)
+  .delete(deleteHandler)
+  .handler(controller.errorHandlers);
 
 async function postHandler(request, response) {
   const userInputValues = request.body;
 
-  const authenticatedUser = await authentication.validate(
+  const authenticatedUser = await authentication.getUser(
     userInputValues.email,
     userInputValues.password,
   );

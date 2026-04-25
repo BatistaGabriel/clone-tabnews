@@ -84,10 +84,10 @@ export class NotFoundError extends Error {
       cause,
     });
     this.name = "NotFoundError";
-    (this.action =
+    ((this.action =
       action ||
       "Verifique se os parâmetros enviados na consulta estão corretos"),
-      (this.statusCode = 404);
+      (this.statusCode = 404));
   }
 
   toJSON() {
@@ -106,8 +106,8 @@ export class UnauthorizedError extends Error {
       cause,
     });
     this.name = "UnauthorizedError";
-    (this.action = action || "Realize novamente o login para continuar"),
-      (this.statusCode = 401);
+    ((this.action = action || "Realize novamente o login para continuar"),
+      (this.statusCode = 401));
   }
 
   toJSON() {
@@ -126,9 +126,9 @@ export class ForbiddenError extends Error {
       cause,
     });
     this.name = "ForbiddenError";
-    (this.action =
+    ((this.action =
       action || "Verifique suas permissões de acesso antes de continuar."),
-      (this.statusCode = 403);
+      (this.statusCode = 403));
   }
 
   toJSON() {
