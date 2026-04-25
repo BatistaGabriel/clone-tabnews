@@ -25,7 +25,15 @@ describe("GET /api/v1/status", () => {
 
   describe("Default user", () => {
     test("Retrieving current system `status`", async () => {
-      const response = await fetch(`${webserver.origin}/api/v1/status`);
+      const createdUser = await orchestrator.createUser();
+      const activatedUser = await orchestrator.activateUser(createdUser);
+      const userSession = await orchestrator.createSession(activatedUser);
+
+      const response = await fetch(`${webserver.origin}/api/v1/status`, {
+        headers: {
+          Cookie: `session_id=${userSession.token}`,
+        },
+      });
       expect(response.status).toBe(200);
 
       const responseBody = await response.json();
@@ -51,7 +59,7 @@ describe("GET /api/v1/status", () => {
 
       const response = await fetch(`${webserver.origin}/api/v1/status`, {
         headers: {
-          cookie: `session_id=${privilegedUserSession.token}`,
+          Cookie: `session_id=${privilegedUserSession.token}`,
         },
       });
 

@@ -33,7 +33,7 @@ describe("GET /api/v1/migrations", () => {
 
       const response = await fetch(`${webserver.origin}/api/v1/migrations`, {
         headers: {
-          cookie: `session_id=${sessionObject.token}`,
+          Cookie: `session_id=${sessionObject.token}`,
         },
       });
       expect(response.status).toBe(403);
@@ -59,7 +59,7 @@ describe("GET /api/v1/migrations", () => {
 
       const response = await fetch(`${webserver.origin}/api/v1/migrations`, {
         headers: {
-          cookie: `session_id=${sessionObject.token}`,
+          Cookie: `session_id=${sessionObject.token}`,
         },
       });
       expect(response.status).toBe(200);

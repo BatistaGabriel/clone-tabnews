@@ -54,7 +54,7 @@ describe("POST /api/v1/migrations", () => {
       const response = await fetch(`${webserver.origin}/api/v1/migrations`, {
         method: "POST",
         headers: {
-          cookie: `session_id=${sessionObject.token}`,
+          Cookie: `session_id=${sessionObject.token}`,
         },
       });
       expect(response.status).toBe(200);
