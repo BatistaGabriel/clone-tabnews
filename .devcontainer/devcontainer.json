@@ -1,0 +1,47 @@
+{
+  "name": "clone-tabnews-devcontainer",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-24-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
+  },
+  "forwardPorts": [3000, 5432, 1025, 1080],
+  "postCreateCommand": "npm install",
+  "postStartCommand": "npm run services:up && npm run services:wait:database",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "eamodio.gitlens",
+        "christian-kohler.path-intellisense",
+        "wix.vscode-import-cost",
+        "EditorConfig.EditorConfig",
+        "ms-azuretools.vscode-containers",
+        "IBM.output-colorizer",
+        "humao.rest-client"
+      ],
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.codeActionsOnSave": {
+          "source.fixAll.eslint": "explicit"
+        },
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "bash",
+            "icon": "terminal-bash"
+          },
+          "zsh": {
+            "path": "zsh"
+          }
+        }
+      }
+    }
+  },
+  "remoteUser": "node",
+    "containerEnv": {
+    "NODE_OPTIONS": "--max-old-space-size=4096",
+    "GH_TOKEN": "${localEnv:GH_TOKEN}"
+  }
+}
