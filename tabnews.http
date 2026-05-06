@@ -1,0 +1,64 @@
+@baseUrl = http://localhost:3000
+@username = user1
+@token_id = 00000000-0000-0000-0000-000000000000
+@email = usuario@email.com
+@password = senha
+
+### 00.01 - Check status (GET /api/v1/status) [HAPPY]
+GET {{baseUrl}}/api/v1/status
+
+### 00.02 - Status com POST (POST /api/v1/status) [NEG]
+POST {{baseUrl}}/api/v1/status
+
+### 01.01 - Criar usuário (POST /api/v1/users) [HAPPY]
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "novo_usuario",
+  "email": "novo@email.com",
+  "password": "senha_forte"
+}
+
+### 01.02 - Ativar conta (PATCH /api/v1/activations/:token_id) [HAPPY]
+# Sem payload nos testes: a ativação usa apenas token na rota.
+PATCH {{baseUrl}}/api/v1/activations/{{token_id}}
+
+### 02.01 - Login (POST /api/v1/sessions) [HAPPY]
+POST {{baseUrl}}/api/v1/sessions
+Content-Type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+### 02.02 - Logout (DELETE /api/v1/sessions) [HAPPY]
+DELETE {{baseUrl}}/api/v1/sessions
+
+### 03.01 - Perfil logado (GET /api/v1/user) [HAPPY]
+GET {{baseUrl}}/api/v1/user
+
+### 03.02 - Buscar usuário por username (GET /api/v1/users/:username) [HAPPY]
+GET {{baseUrl}}/api/v1/users/{{username}}
+
+### 03.03 - Atualizar usuário (PATCH /api/v1/users/:username) [HAPPY]
+PATCH {{baseUrl}}/api/v1/users/{{username}}
+Content-Type: application/json
+
+{
+  "username": "user_atualizado",
+  "email": "email_atualizado@email.com",
+  "password": "nova_senha"
+}
+
+### 04.01 - Listar migrations (GET /api/v1/migrations) [HAPPY]
+GET {{baseUrl}}/api/v1/migrations
+
+### 04.02 - Executar migrations (POST /api/v1/migrations) [HAPPY]
+# Sem payload nos testes: endpoint é acionado sem body.
+POST {{baseUrl}}/api/v1/migrations
+
+### 04.03 - Migrations com PUT (PUT /api/v1/migrations) [NEG]
+# Sem payload nos testes; usado para validar método não permitido.
+PUT {{baseUrl}}/api/v1/migrations
