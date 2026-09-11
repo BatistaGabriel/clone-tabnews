@@ -44,12 +44,12 @@ describe("Use case: Registration Flow (all successful)", () => {
 
     expect(lastEmail.sender).toBe("<contact@mail.batistalabs.com>");
     expect(lastEmail.recipients[0]).toBe("<registration.flow@domain.com>");
-    expect(lastEmail.subject).toBe("Activate your account");
+    expect(lastEmail.subject).toBe("Ative sua conta");
     expect(lastEmail.text).toContain("RegistrationFlow");
 
     activationTokenId = orchestrator.extractUUID(lastEmail.text);
     expect(lastEmail.text).toContain(
-      `${webserver.origin}/register/activate/${activationTokenId}`,
+      `${webserver.origin}/cadastro/ativar/${activationTokenId}`,
     );
 
     const activationTokenObject =

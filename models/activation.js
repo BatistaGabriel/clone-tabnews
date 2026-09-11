@@ -109,7 +109,7 @@ async function sendEmailToUser(user, activationToken) {
     from: "CloneTabNews <contact@mail.batistalabs.com>",
     to: user.email,
     subject: "Ative sua conta",
-    text: `Olá ${user.username}, ative sua conta clicando no link abaixo: \n\n${webserver.origin}/register/activate/${activationToken.id}\n\n\nObrigado!\n\n- Equipe CloneTabNews`,
+    text: `Olá ${user.username}, ative sua conta clicando no link abaixo: \n\n${webserver.origin}/cadastro/ativar/${activationToken.id}\n\n\nObrigado!\n\n- Equipe CloneTabNews`,
   });
 }
 
